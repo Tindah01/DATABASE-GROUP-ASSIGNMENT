@@ -182,3 +182,21 @@ CREATE TABLE product_attribute (
     attribute_category_id INT REFERENCES attribute_category(id),
     attribute_type_id INT REFERENCES attribute_type(id)
 );
+INSERT INTO attribute_type (name, data_type) VALUES
+('Waterproof', 'boolean');
+-- Let's assume product with id 1 is a pair of Nike running shoes
+INSERT INTO product_attribute (
+    product_id, name, value, attribute_category_id, attribute_type_id
+) VALUES
+-- Physical: Material (text)
+(1, 'Material', 'Mesh and rubber', 1, 1),
+-- Physical: Weight (number)
+(1, 'Weight', '0.85', 1, 2),
+-- Technical: Waterproof (boolean, stored as text 'true')
+(1, 'Waterproof', 'true', 2, (SELECT id FROM attribute_type WHERE name = 'Waterproof')),
+-- Cultural: Cultural Significance (text)
+(1, 'Cultural Significance', 'Popular in urban youth culture', 4, 9),
+-- Safety: Care Instructions (text)
+(1, 'Care Instructions', 'Do not machine wash; air dry only.', 5, 10);
+
+
